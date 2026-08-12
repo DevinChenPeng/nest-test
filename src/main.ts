@@ -7,6 +7,7 @@ import {
 } from '@nestjs/platform-fastify';
 import { Logger } from 'nestjs-pino';
 import { AppModule } from './app.module';
+import { ApiResponseInterceptor } from './common/interceptors/api-response.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -26,6 +27,9 @@ async function bootstrap() {
       transform: true, // 自动将入参转换为 DTO 实例并完成类型转换
     }),
   );
+
+  // 全局包装成功响应；异常响应由异常过滤器负责处理。
+  app.useGlobalInterceptors(new ApiResponseInterceptor());
 
   const port = Number(process.env.PORT ?? 3000);
   await app.listen(port, '0.0.0.0');

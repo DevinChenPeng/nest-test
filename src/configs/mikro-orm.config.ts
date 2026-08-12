@@ -1,7 +1,6 @@
+import 'dotenv/config';
 import { defineConfig } from '@mikro-orm/mysql';
 import { Migrator } from '@mikro-orm/migrations';
-import { ReflectMetadataProvider } from '@mikro-orm/decorators/legacy';
-import { User } from './users/entities/user.entity';
 
 export const mikroOrmConfig = defineConfig({
   host: process.env.DB_HOST ?? 'localhost',
@@ -9,8 +8,8 @@ export const mikroOrmConfig = defineConfig({
   user: process.env.DB_USER ?? 'root',
   password: process.env.DB_PASSWORD ?? '',
   dbName: process.env.DB_NAME ?? 'nest_test',
-  entities: [User],
-  metadataProvider: ReflectMetadataProvider,
+  entities: ['dist/**/*.entity.js'],
+  entitiesTs: ['src/**/*.entity.ts'],
   debug: process.env.NODE_ENV !== 'production',
   extensions: [Migrator],
   migrations: {
