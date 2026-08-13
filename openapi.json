@@ -1,0 +1,385 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/todos": {
+      "post": {
+        "operationId": "TodosController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTodoDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "创建成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TodoApiResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "创建待办事项",
+        "tags": [
+          "待办事项"
+        ]
+      },
+      "get": {
+        "operationId": "TodosController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "获取成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TodoListApiResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "获取待办事项列表",
+        "tags": [
+          "待办事项"
+        ]
+      }
+    },
+    "/todos/{id}": {
+      "get": {
+        "operationId": "TodosController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "待办事项 ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "获取成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TodoApiResponseDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "待办事项不存在"
+          }
+        },
+        "summary": "获取单个待办事项",
+        "tags": [
+          "待办事项"
+        ]
+      },
+      "patch": {
+        "operationId": "TodosController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "待办事项 ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateTodoDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "更新成功"
+          },
+          "404": {
+            "description": "待办事项不存在"
+          }
+        },
+        "summary": "更新待办事项",
+        "tags": [
+          "待办事项"
+        ]
+      },
+      "delete": {
+        "operationId": "TodosController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "待办事项 ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "删除成功"
+          },
+          "404": {
+            "description": "待办事项不存在"
+          }
+        },
+        "summary": "删除待办事项",
+        "tags": [
+          "待办事项"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "nest-test API",
+    "description": "nest-test 服务接口文档",
+    "version": "1.0.0",
+    "contact": {}
+  },
+  "tags": [
+    {
+      "name": "待办事项",
+      "description": "待办事项管理接口"
+    }
+  ],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "CreateTodoDto": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "待办事项标题",
+            "example": "学习 NestJS",
+            "minLength": 1,
+            "maxLength": 255
+          },
+          "content": {
+            "type": "string",
+            "description": "待办事项内容",
+            "example": "完成 Swagger 文档接入，并输出到 Apifox。",
+            "minLength": 1,
+            "maxLength": 65535
+          },
+          "done": {
+            "type": "boolean",
+            "description": "是否已完成",
+            "example": false
+          }
+        },
+        "required": [
+          "title",
+          "content",
+          "done"
+        ]
+      },
+      "TodoDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "待办事项 ID",
+            "example": "f3f90b66-60b4-4e0b-a0f0-5d1d48959717"
+          },
+          "title": {
+            "type": "string",
+            "description": "待办事项标题",
+            "example": "学习 NestJS"
+          },
+          "content": {
+            "type": "string",
+            "description": "待办事项内容",
+            "example": "完成 Swagger 文档接入，并输出到 Apifox。"
+          },
+          "done": {
+            "type": "boolean",
+            "description": "是否已完成",
+            "example": false
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "创建时间",
+            "format": "date-time",
+            "example": "2026-08-13T06:00:00.000Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "description": "更新时间",
+            "format": "date-time",
+            "example": "2026-08-13T06:00:00.000Z"
+          },
+          "deletedAt": {
+            "type": "string",
+            "description": "删除时间，未删除时为 null",
+            "format": "date-time",
+            "nullable": true,
+            "example": null
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "content",
+          "done",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "TodoApiResponseDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "业务状态码",
+            "enum": [
+              "00000",
+              "40000",
+              "40100",
+              "40300",
+              "40400",
+              "50200",
+              "50000"
+            ],
+            "example": "00000"
+          },
+          "result": {
+            "type": "string",
+            "description": "业务结果",
+            "enum": [
+              "success",
+              "failure"
+            ],
+            "example": "success"
+          },
+          "data": {
+            "description": "业务数据",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TodoDto"
+              }
+            ]
+          },
+          "message": {
+            "type": "string",
+            "description": "业务消息，成功时通常为 null",
+            "nullable": true,
+            "example": null
+          },
+          "timestamp": {
+            "type": "string",
+            "description": "响应时间",
+            "format": "date-time",
+            "example": "2026-08-13T06:00:00.000Z"
+          }
+        },
+        "required": [
+          "code",
+          "result",
+          "data",
+          "message",
+          "timestamp"
+        ]
+      },
+      "TodoListApiResponseDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "业务状态码",
+            "enum": [
+              "00000",
+              "40000",
+              "40100",
+              "40300",
+              "40400",
+              "50200",
+              "50000"
+            ],
+            "example": "00000"
+          },
+          "result": {
+            "type": "string",
+            "description": "业务结果",
+            "enum": [
+              "success",
+              "failure"
+            ],
+            "example": "success"
+          },
+          "data": {
+            "description": "待办事项列表",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TodoDto"
+            }
+          },
+          "message": {
+            "type": "string",
+            "description": "业务消息，成功时通常为 null",
+            "nullable": true,
+            "example": null
+          },
+          "timestamp": {
+            "type": "string",
+            "description": "响应时间",
+            "format": "date-time",
+            "example": "2026-08-13T06:00:00.000Z"
+          }
+        },
+        "required": [
+          "code",
+          "result",
+          "data",
+          "message",
+          "timestamp"
+        ]
+      },
+      "UpdateTodoDto": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "待办事项标题",
+            "example": "学习 NestJS",
+            "minLength": 1,
+            "maxLength": 255
+          },
+          "content": {
+            "type": "string",
+            "description": "待办事项内容",
+            "example": "完成 Swagger 文档接入，并输出到 Apifox。",
+            "minLength": 1,
+            "maxLength": 65535
+          },
+          "done": {
+            "type": "boolean",
+            "description": "是否已完成",
+            "example": false
+          }
+        }
+      }
+    }
+  }
+}
