@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import { defineConfig } from '@mikro-orm/mysql';
 import { Migrator } from '@mikro-orm/migrations';
+import { SeedManager } from '@mikro-orm/seeder';
 
 export const mikroOrmConfig = defineConfig({
   host: process.env.DB_HOST ?? 'localhost',
@@ -11,7 +12,7 @@ export const mikroOrmConfig = defineConfig({
   entities: ['dist/**/*.entity.js'],
   entitiesTs: ['src/**/*.entity.ts'],
   debug: process.env.NODE_ENV !== 'production',
-  extensions: [Migrator],
+  extensions: [Migrator, SeedManager],
   migrations: {
     path: 'dist/migrations',
     pathTs: 'src/migrations',
