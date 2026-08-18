@@ -1,5 +1,5 @@
 import { defineEntity, p } from '@mikro-orm/core';
-import { BaseEntity } from '../../common/entities/base-entity';
+import { BaseEntity } from '../../../common/entities/base-entity';
 
 export class Todo extends BaseEntity {
   title!: string;

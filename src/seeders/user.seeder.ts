@@ -1,6 +1,6 @@
 import type { EntityManager } from '@mikro-orm/core';
 import { Seeder } from '@mikro-orm/seeder';
-import { User } from '../users/entities/user.entity';
+import { User } from '../modules/users/entities/user.entity';
 import { hashPassword } from '../utils/password.util';
 
 const DEFAULT_ADMIN_EMAIL = 'admin@example.com';

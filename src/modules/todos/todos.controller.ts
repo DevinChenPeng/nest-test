@@ -22,7 +22,7 @@ import { UpdateTodoDto } from './dto/update-todo.dto';
 import {
   TodoApiResponseDto,
   TodoListApiResponseDto,
-} from '../common/dto/api-response.dto';
+} from '../../common/dto/api-response.dto';
 
 @ApiTags('待办事项')
 @Controller('todos')

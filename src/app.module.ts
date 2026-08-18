@@ -3,10 +3,10 @@ import { ConfigModule } from '@nestjs/config';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { LoggerModule } from 'nestjs-pino';
 import { mikroOrmConfig } from './configs/mikro-orm.config';
-import { TodosModule } from './todos/todos.module';
+import { TodosModule } from './modules/todos/todos.module';
 import { pinoHttpConfig } from './configs/log.config';
-import { UsersModule } from './users/users.module';
-import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './modules/users/users.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [

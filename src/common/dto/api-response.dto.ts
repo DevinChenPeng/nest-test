@@ -3,7 +3,7 @@ import {
   ApiResponseCode,
   ApiResponseResult,
 } from '../interfaces/api-response.interface';
-import { TodoDto } from '../../todos/dto/todo-response.dto';
+import { TodoDto } from '../../modules/todos/dto/todo-response.dto';
 
 export class TodoApiResponseDto {
   @ApiProperty({

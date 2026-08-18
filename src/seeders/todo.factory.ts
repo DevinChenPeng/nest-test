@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import type { EntityData } from '@mikro-orm/core';
 import { Factory } from '@mikro-orm/seeder';
-import { Todo } from '../todos/entities/todo.entity';
+import { Todo } from '../modules/todos/entities/todo.entity';
 
 export class TodoFactory extends Factory<Todo> {
   readonly model = Todo;

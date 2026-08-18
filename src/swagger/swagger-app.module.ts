@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { TodosController } from '../todos/todos.controller';
-import { TodosService } from '../todos/todos.service';
+import { TodosController } from '../modules/todos/todos.controller';
+import { TodosService } from '../modules/todos/todos.service';
 
 /**
  * 仅用于生成 OpenAPI 文档的独立模块。
