@@ -5,6 +5,8 @@ import { LoggerModule } from 'nestjs-pino';
 import { mikroOrmConfig } from './configs/mikro-orm.config';
 import { TodosModule } from './todos/todos.module';
 import { pinoHttpConfig } from './configs/log.config';
+import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -14,6 +16,8 @@ import { pinoHttpConfig } from './configs/log.config';
     }),
     MikroOrmModule.forRoot(mikroOrmConfig),
     TodosModule,
+    UsersModule,
+    AuthModule,
   ],
 })
 export class AppModule {}

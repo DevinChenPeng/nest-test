@@ -9,6 +9,10 @@ export const mikroOrmConfig = defineConfig({
   user: process.env.DB_USER ?? 'root',
   password: process.env.DB_PASSWORD ?? '',
   dbName: process.env.DB_NAME ?? 'nest_test',
+  pool: {
+    min: Number(process.env.DB_POOL_MIN ?? 2),
+    max: Number(process.env.DB_POOL_MAX ?? 10),
+  },
   entities: ['dist/**/*.entity.js'],
   entitiesTs: ['src/**/*.entity.ts'],
   debug: process.env.NODE_ENV !== 'production',
