@@ -4,6 +4,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { EntityManager, EntityRepository } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { User, UserSchema } from './entities/user.entity';
+import { UserExceptions } from '../../common/exceptions/user.exception';
 
 @Injectable()
 export class UsersService {
@@ -17,7 +18,7 @@ export class UsersService {
       email: createUserDto.email,
     });
     if (user) {
-      throw new Error('User already exists');
+      throw UserExceptions.alreadyExists();
     }
     // Create a new user entity and persist it to the database
     const newUser = this.userRepository.create(createUserDto);
@@ -38,7 +39,7 @@ export class UsersService {
   async update(id: string, updateUserDto: UpdateUserDto) {
     const user = await this.userRepository.findOne({ id });
     if (!user) {
-      throw new Error('User not found');
+      throw UserExceptions.notFound();
     }
     this.userRepository.assign(user, updateUserDto);
     await this.em.flush();

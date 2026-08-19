@@ -1,9 +1,10 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { EntityManager, EntityRepository } from '@mikro-orm/mysql';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
 import { Todo, TodoSchema } from './entities/todo.entity';
+import { TodoExceptions } from '../../common/exceptions/todo.exception';
 
 @Injectable()
 export class TodosService {
@@ -27,7 +28,7 @@ export class TodosService {
   async findOne(id: string) {
     const todo = await this.todoRepository.findOne({ id });
     if (!todo) {
-      throw new NotFoundException(`Todo with id ${id} not found`);
+      throw TodoExceptions.notFound();
     }
     return todo;
   }

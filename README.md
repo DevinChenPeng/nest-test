@@ -57,6 +57,36 @@ $ pnpm run test:e2e
 $ pnpm run test:cov
 ```
 
+## RSA 加密登录
+
+登录接口使用 `RSA-OAEP-SHA256` 传输密码。请在运行服务前配置以下 PEM 格式环境变量；多行换行可写为 `\\n`：
+
+```env
+RSA_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\\n...\\n-----END PRIVATE KEY-----"
+RSA_PUBLIC_KEY="-----BEGIN PUBLIC KEY-----\\n...\\n-----END PUBLIC KEY-----"
+```
+
+前端先请求 `GET /auth/public-key` 获取公钥，然后用 `RSA-OAEP-SHA256` 加密以下 JSON，并将 Base64 密文及原始时间戳提交到 `POST /auth/signin`：
+
+```json
+{
+  "email": "user@example.com",
+  "encryptedPayload": "Base64 RSA 密文",
+  "timestamp": 1787136000000
+}
+```
+
+加密前的 JSON 必须为：
+
+```json
+{
+  "password": "用户密码",
+  "timestamp": 1787136000000
+}
+```
+
+服务端仅接受 5 分钟内的请求，且同一邮箱与时间戳组合只能使用一次。生产环境仍必须启用 HTTPS，并应把已使用请求标识存储在 Redis 等共享缓存中，以支持多实例部署。
+
 ## Deployment
 
 When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
