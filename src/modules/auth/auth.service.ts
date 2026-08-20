@@ -29,7 +29,10 @@ export class AuthService {
   }
 
   /** 密码仅通过 HTTPS 传输，随后与数据库中的 bcrypt 哈希进行比对。 */
-  async signIn({ email, password }: SignInDto): Promise<boolean> {
+  async signIn({
+    email,
+    password,
+  }: SignInDto): Promise<{ id: string; email: string; name: string }> {
     const user = await this.usersService.findOne(email);
     if (!user) {
       throw AuthExceptions.invalidCredentials();
@@ -38,6 +41,7 @@ export class AuthService {
     if (!isPasswordValid) {
       throw AuthExceptions.invalidCredentials();
     }
-    return true;
+
+    return { id: user.id, email: user.email, name: user.name };
   }
 }

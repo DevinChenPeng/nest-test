@@ -1,18 +1,18 @@
 import { Controller, Post, Body } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { CreateUserDto } from '../users/dto/create-user.dto';
 import { ApiBody, ApiOperation } from '@nestjs/swagger';
 import { SignInDto } from './dto/sign-in.dto';
+import { SignUpDto } from './dto/sign-up.dto';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @ApiOperation({ summary: '用户注册' })
-  @ApiBody({ type: CreateUserDto })
+  @ApiBody({ type: SignUpDto })
   @Post('signup')
-  signUp(@Body() createUser: CreateUserDto) {
-    return this.authService.signUp(createUser);
+  signUp(@Body() signUpDto: SignUpDto) {
+    return this.authService.signUp(signUpDto);
   }
 
   @ApiOperation({ summary: '用户登录' })
